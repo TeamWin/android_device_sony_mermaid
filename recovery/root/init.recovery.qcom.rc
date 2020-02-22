@@ -25,6 +25,7 @@ on init
 
 on boot
     setprop sys.usb.config adb
+    start load_kernel_modules
     start prepdecrypt
 
 on property:crypto.ready=1
@@ -76,6 +77,13 @@ service sbin_qseecomd /sbin/qseecomd
     seclabel u:r:recovery:s0
 
 service prepdecrypt /sbin/prepdecrypt.sh
+    oneshot
+    disabled
+    user root
+    group root
+    seclabel u:r:recovery:s0
+
+service load_kernel_modules /sbin/load_kernel_modules.sh
     oneshot
     disabled
     user root
